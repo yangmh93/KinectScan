@@ -1,2 +1,3 @@
 # thesis
-test change 1
+AUTOMATED ONE-TO-ONE SCALE MODELING FOR 3D PRINTING
+using Kinect v2 and OpenCV

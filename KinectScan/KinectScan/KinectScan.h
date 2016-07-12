@@ -32,6 +32,25 @@ void SafeRelease(T& ptr) { if (ptr) { ptr->Release(); ptr = nullptr; } }
 
 class KinectScan
 {
+private:
+	//pointer to buffer that contains pixels that get pushed to the screen
+	//size of this buffer is SCRWIDTH * SCRWIDTH * sizeof(uint32)
+	uint32* m_pixelBuffer = nullptr;
+
+	IKinectSensor* m_sensor = nullptr;
+	IDepthFrameReader* m_depthFrameReader = nullptr;
+	IColorFrameReader* m_colorFrameReader = nullptr;
+
+	uint16* m_depthBuffer = nullptr;
+	int m_depthWidth = 0, m_depthHeight = 0;
+
+	uint32* m_colorBuffer = nullptr;
+	int m_colorWidth = 0, m_colorHeight = 0;
+
+	ColorSpacePoint* m_colorSpacePoints = nullptr;
+
+	ICoordinateMapper* m_coordinateMapper = nullptr;
+
 public:
 	void Init();
 	void Tick(float deltaTime);
@@ -47,14 +66,5 @@ public:
 		m_pixelBuffer[x + y * SCRWIDTH] = color;
 	}
 
-private:
 
-	//pointer to buffer that contains pixels that get pushed to the screen
-	//size of this buffer is SCRWIDTH * SCRWIDTH * sizeof(uint32)
-	uint32* m_pixelBuffer = nullptr;
-
-	IKinectSensor* m_sensor = nullptr;
-	IDepthFrameReader* m_depthFrameReader = nullptr;
-
-	uint16* m_depthBuffer = nullptr;
 };
