@@ -1,4 +1,6 @@
-/*#include <iostream>
+
+//Kinect v2
+#include <iostream>
 #include <chrono>
 
 #include <SDL.h>
@@ -126,38 +128,105 @@ int main(int, char**)
 
 	return 0;
 }
-*/
-#include <opencv2/core/core.hpp>
+
+
+/*
+//OpenCV Test Code
+
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
+using namespace cv;
+using namespace std;
+
+int main() {
+	VideoCapture stream1(0);   //0 is the id of video device.0 if you have only one camera.
+
+	if (!stream1.isOpened()) { //check if video device has been initialised
+		cout << "cannot open camera";
+	}
+
+	//unconditional loop
+	while (true) {
+		Mat cameraFrame;
+		stream1.read(cameraFrame);
+		imshow("cam", cameraFrame);
+		if (waitKey(30) >= 0)
+			break;
+	}
+	return 0;
+}*/
+/*
+#include "opencv2/highgui/highgui.hpp"
 #include <iostream>
 
 using namespace cv;
 using namespace std;
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
-	if (argc != 2)
+	VideoCapture cap(1); // open the video camera no. 0
+
+	if (!cap.isOpened())  // if not success, exit program
 	{
-		cout << " Usage: display_image ImageToLoadAndDisplay" << endl;
+		cout << "ERROR: Cannot open the video file" << endl;
 		return -1;
 	}
 
-	Mat image;
-	image = imread(argv[1], IMREAD_COLOR); // Read the file
+	namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
 
-	if (!image.data) // Check for invalid input
+	double dWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
+	double dHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
+
+	cout << "Frame Size = " << dWidth << "x" << dHeight << endl;
+
+	Size frameSize(static_cast<int>(dWidth), static_cast<int>(dHeight));
+
+	VideoWriter oVideoWriter("C:/MyVideo.asf", CV_FOURCC('P', 'I', 'M', '1'), 20, frameSize, true); //initialize the VideoWriter object 
+
+	if (!oVideoWriter.isOpened()) //if not initialize the VideoWriter successfully, exit the program
 	{
-		cout << "Could not open or find the image" << std::endl;
+		cout << "ERROR: Failed to write the video" << endl;
 		return -1;
 	}
 
-	namedWindow("Display window", WINDOW_AUTOSIZE); // Create a window for display.
-	imshow("Display window", image); // Show our image inside it.
-	/*
-	Solution Properties -> Configuration Properties -> Debugging -> Command line arguments -> display_image.jpeg
-	Image located in subfolder with main.cpp
-	*/
-	printf("I think it works.\n");
-	waitKey(0); // Wait for a keystroke in the window
+	while (1)
+	{
+
+		Mat frame;
+		//// estimates FPS of camera
+		int64 start = cv::getTickCount();
+
+		//Grab a frame
+		cap >> frame;
+
+		if (waitKey(3) >= 0) {
+			break;
+		}
+
+		double fps = cv::getTickFrequency() / (cv::getTickCount() - start);
+		std::cout << "FPS : " << fps << std::endl;
+		////
+		bool bSuccess = cap.read(frame); // read a new frame from video
+
+		if (!bSuccess) //if not success, break loop
+		{
+			cout << "ERROR: Cannot read a frame from video file" << endl;
+			break;
+		}
+
+		oVideoWriter.write(frame); //writer the frame into the file
+
+		imshow("MyVideo", frame); //show the frame in "MyVideo" window
+
+		if (waitKey(10) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
+		{
+			cout << "esc key is pressed by user" << endl;
+			break;
+		}
+	}
+
 	return 0;
+
 }
+*/

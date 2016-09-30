@@ -1,0 +1,3 @@
+﻿  KinectScan.cpp
+  main.cpp
+LINK : fatal error LNK1181: cannot open input file 'opencv_calib3d310.lib'

@@ -1,0 +1,5 @@
+﻿  main.cpp
+c:\users\mikey\source\repos\thesis\kinectscan\kinectscan\main.cpp(136): fatal error C1083: Cannot open include file: 'opencv2/highgui/highgui.hpp': No such file or directory
+  KinectScan.cpp
+c:\users\mikey\source\repos\thesis\kinectscan\kinectscan\kinectscan.h(13): fatal error C1083: Cannot open include file: 'Kinect.h': No such file or directory
+  Generating Code...
